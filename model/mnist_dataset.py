@@ -30,7 +30,7 @@ def read32(bytestream):
 
 def check_image_file_header(filename):
     """Validate that filename corresponds to images for the MNIST dataset."""
-    with tf.io.gfile.Open(filename, 'rb') as f:
+    with tf.gfile.Open(filename, 'rb') as f:
         magic = read32(f)
         read32(f)  # num_images, unused
         rows = read32(f)
@@ -55,10 +55,10 @@ def check_labels_file_header(filename):
 def download(directory, filename):
     """Download (and unzip) a file from the MNIST dataset if not already done."""
     filepath = os.path.join(directory, filename)
-    if tf.io.gfile.Exists(filepath):
+    if tf.gfile.Exists(filepath):
         return filepath
-    if not tf.io.gfile.Exists(directory):
-        tf.io.gfile.MakeDirs(directory)
+    if not tf.gfile.Exists(directory):
+        tf.gfile.MakeDirs(directory)
     # CVDF mirror of http://yann.lecun.com/exdb/mnist/
     url = 'https://storage.googleapis.com/cvdf-datasets/mnist/' + filename + '.gz'
     zipped_filepath = filepath + '.gz'
